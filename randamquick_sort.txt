@@ -1,0 +1,137 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<conio.h>
+
+int count=0;
+int main()
+{
+
+    void get_data(int [],int);
+    void put_data(int [],int);
+    int myrandom(int ,int);
+    int swap(int*,int*);
+     int partition(int[],int,int);
+    void Quick_sort(int [],int,int);
+    int a[100];
+    int n;
+    clrscr();
+    printf("Enter the size of an array:\n");
+    scanf("%d",&n);
+    printf("Enter the array elements:\n");
+    get_data(a,n);
+    printf("Array before sorting:\n");
+    put_data(a,n);
+    Quick_sort(a,0,n-1);
+    printf("\nArray after sorting:\n");
+    put_data(a,n);
+    printf("\n\nFor n=%d no of counts are=%d",n,count);
+    getch();
+}
+
+int myrandom(int lower,int upper)
+{
+int num;
+srand(time(0));
+num=(rand()%(upper -lower +1))+lower;
+return num;
+}
+
+
+int partition(int a[],int p,int r)
+{
+
+   int x,i,j,y,temp;
+   y=myrandom(p,r-1);
+   temp=a[y];
+   a[y]=a[r];
+   a[r]=temp;
+   x=a[r];
+   count++;
+   i=p-1;
+   count++;
+   for(j=p;j<=r-1;j++)
+   {
+       count++;
+
+       if(a[j]<x)
+       {
+	   count++;
+	   i=i+1;
+	   count++;
+	   swap(&a[i],&a[j]);
+
+       }
+   }
+      swap(&a[i+1],&a[r]);
+      count++;
+   return (i+1);
+
+}
+
+void Quick_sort(int a[],int p,int r)
+{
+    int q;
+    count++;
+    if(p<r)
+    {
+	count++;
+	q=partition(a,p,r);
+	count++;
+	Quick_sort(a,p,q-1);
+	count++;
+	Quick_sort(a,q+1,r);
+	count++;
+
+    }
+
+}
+
+void get_data(int arr[],int n)
+{
+    int i;
+    for (i = 0; i < n; i++)
+    {
+	scanf("%d",&arr[i]);
+    }
+}
+
+void put_data(int a[],int n)
+{
+    int i;
+    for(i=0 ; i < n; i++)
+    {
+	printf("%d ",a[i]);
+    }
+}
+
+int  swap(int *a,int *b)
+{
+    int temp;
+    temp=*a;
+    *a=*b;
+    *b=temp;
+
+}
+
+
+partition(arr[], lo, hi) 
+    pivot = arr[hi]
+    i = lo     // place for swapping
+    for j := lo to hi – 1 do
+        if arr[j] <= pivot then
+            swap arr[i] with arr[j]
+            i = i + 1
+    swap arr[i] with arr[hi]
+    return i
+
+partition_r(arr[], lo, hi)
+    r = Random Number from lo to hi
+    Swap arr[r] and arr[hi]
+    return partition(arr, lo, hi)
+
+quicksort(arr[], lo, hi)
+    if lo < hi
+        p = partition_r(arr, lo, hi)
+        quicksort(arr, p-1, hi)
+        quicksort(arr, p+1, hi)
